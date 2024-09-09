@@ -56,6 +56,9 @@
     height: 50px;
     background-color: red;
 }
+/*.child_block:hover {*/
+/*    left: 500px;*/
+/*}*/
 
 .inner_move_block {
     margin-top: 50px;
