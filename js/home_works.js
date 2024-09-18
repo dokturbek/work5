@@ -95,3 +95,47 @@ reset.onclick = () => {
     resultMinute.innerHTML = minute
 
 }
+
+document.addEventListener('DOMContentLoaded',()=>{
+    const charactersBlock=document.querySelector('.characters_container');
+    const request=new XMLHttpRequest()
+    request.open('GET', '../data/persons.json');
+    request.setRequestHeader('Content-type','application/json');
+    request.send();
+
+    request.onload=()=>{
+        if (request.status>=200 && request.status<400) {
+            const characters=JSON.parse(request.responseText);
+            characters.map((character)=>{
+                const characterContainer=document.createElement('div');
+                characterContainer.setAttribute("class" , 'character_container');
+                characterContainer.innerHTML =`
+                <div class="character_photo">
+                    <img src="${character.photo}" alt="">
+                </div>
+                <h2>${character.name}</h2>
+                <p>${character.age}</p>
+                <p>${character.bio}</p>
+                `;
+                const h2Element=characterContainer.querySelector('h2');
+                const pElements=characterContainer.querySelectorAll('p');
+
+                if (h2Element){
+                    h2Element.style.color='black';
+                }
+                pElements.forEach(p=>{
+                    p.style.color='black';
+                });
+                charactersBlock.append(characterContainer);
+            }) ;
+        } else {
+            console.error('Request failed', request.status);
+        }
+
+    };
+    request.open.error=()=>{
+        console.error('Request failed');
+    }
+})
+
+
